@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cmc741d3nu6p6"
-path="res://.godot/imported/player.png-4480c05b4e9188c0986615a6483c1bf7.ctex"
+uid="uid://bt1n55t08pqlk"
+path="res://.godot/imported/BasicShot_Impact_RP1 (16x16).png-18572ed3e6437262f1306f23069ef35c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tileset/player.png"
-dest_files=["res://.godot/imported/player.png-4480c05b4e9188c0986615a6483c1bf7.ctex"]
+source_file="res://assets/Animations/MainCharacterGunShot/BasicShot_Impact_RP1 (16x16).png"
+dest_files=["res://.godot/imported/BasicShot_Impact_RP1 (16x16).png-18572ed3e6437262f1306f23069ef35c.ctex"]
 
 [params]
 

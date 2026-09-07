@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b82wwl4mes3mo"]
 
-[ext_resource type="Texture2D" uid="uid://cmc741d3nu6p6" path="res://assets/tileset/player.png" id="1_4flbx"]
+[ext_resource type="Texture2D" uid="uid://cmc741d3nu6p6" path="res://assets/TileSets/player.png" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://cpfmo0cfjgoxy" path="res://Player.cs" id="1_onrkg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pe210"]
@@ -15,5 +15,3 @@ shape = SubResource("RectangleShape2D_pe210")
 
 [node name="Player" type="Sprite2D" parent="." unique_id=696906463]
 texture = ExtResource("1_4flbx")
-
-[node name="Camera2D" type="Camera2D" parent="." unique_id=2133747364]
