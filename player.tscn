@@ -15,3 +15,5 @@ shape = SubResource("RectangleShape2D_pe210")
 
 [node name="Player" type="Sprite2D" parent="." unique_id=696906463]
 texture = ExtResource("1_4flbx")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2133747364]
