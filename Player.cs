@@ -6,6 +6,8 @@ public partial class Player : CharacterBody2D
 	[Export] public float Speed = 200.0f;
     [Export] public float JumpVelocity = -350.0f;
 
+	private Vector2 _spawnPosition;
+
 
 	// Pega uma constante da velocidade que foi configurado como 980 px/s² 
 	// Para poder ver ela ou alterar:
@@ -14,6 +16,25 @@ public partial class Player : CharacterBody2D
 	//			No campo: Gravida Padrão
 	public float Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 
+	public override void _Ready()
+    {
+        var spawnPoint = GetNodeOrNull<Node2D>("../SpawnPoint");
+        if (spawnPoint != null)
+        {
+            _spawnPosition = spawnPoint.GlobalPosition;
+            GlobalPosition = _spawnPosition;
+        }
+        else
+        {
+            _spawnPosition = GlobalPosition;
+        }
+    }
+
+	public void Respawn()
+    {
+        GlobalPosition = _spawnPosition;
+        Velocity = Vector2.Zero;
+    }
 
 	public override void _PhysicsProcess(double delta)
 	{
