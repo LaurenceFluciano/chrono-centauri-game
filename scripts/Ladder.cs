@@ -6,6 +6,8 @@ public partial class Ladder : TimeArea
 
     public override void _Ready()
     {
+        base._Ready();
+
         BodyEntered += OnBodyEntered;
         BodyExited += OnBodyExited;
     }

@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://bkemgfc4i2w4g"]
+
+[ext_resource type="Texture2D" uid="uid://djhb2h1vu5gjs" path="res://assets/sprites/past-lever.png" id="1_0ohsc"]
+
+[sub_resource type="Animation" id="Animation_soi7j"]
+resource_name = "Ativado"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PastLever:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+
+[sub_resource type="Animation" id="Animation_0ohsc"]
+resource_name = "Ativar"
+step = 0.033
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PastLever:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_7uavd"]
+resource_name = "Desativar"
+step = 0.033
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PastLever:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.40000007, 0.59999996, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [4, 3, 2, 1, 0]
+}
+
+[sub_resource type="Animation" id="Animation_1btnt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PastLever:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7uavd"]
+_data = {
+&"Ativado": SubResource("Animation_soi7j"),
+&"Ativar": SubResource("Animation_0ohsc"),
+&"Desativar": SubResource("Animation_7uavd"),
+&"RESET": SubResource("Animation_1btnt")
+}
+
+[node name="Lever" type="Node2D" unique_id=487265227]
+
+[node name="PastLever" type="Sprite2D" parent="." unique_id=873561688]
+texture = ExtResource("1_0ohsc")
+hframes = 5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=119970215]
+libraries/ = SubResource("AnimationLibrary_7uavd")
+speed_scale = 4.0

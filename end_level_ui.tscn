@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://qhvjvbspedrn"]
+
+[node name="EndLevelUI" type="CanvasLayer" unique_id=49777753]
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1095428830]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.92156863)
+
+[node name="Label" type="Label" parent="ColorRect" unique_id=1140831014]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -135.0
+offset_top = -11.5
+offset_right = 135.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "Fim do Level. Obrigado por jogar! (:"
