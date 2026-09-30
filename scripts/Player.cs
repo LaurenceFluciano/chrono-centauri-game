@@ -17,6 +17,13 @@ public partial class Player : CharacterBody2D
 
     public bool IsTransition = false;
 
+    public bool IsNearLadder = false;
+
+    // Funcionalidade de subir escadas (acoplado diretamente pq somenteo player faz isso)
+
+    // Temporario
+    public Node2D CurrentLadder = null;
+
 
 	// Pega uma constante da velocidade que foi configurado como 980 px/s² 
 	// Para poder ver ela ou alterar:
@@ -107,34 +114,51 @@ public partial class Player : CharacterBody2D
 		Vector2 velocity = Velocity; 
 		// Pega o atributo velocidade interno da classe herdada CharacterBody2D 
 		// 	(ou internamente nas profundezas);
-		
 
-        if (!IsOnFloor())
-        {
-            velocity.Y += Gravity * (float)delta;
-        }
 
-		// Configurei isso em Projeto > Configurações do Projeto > Mapeamento de Entrada
-		//	Nele eu tenho uma ação e os inputs linkados
-		//	Através dos métodos estáticos (IsActionJustPressed, GetAxis) da classe Input
-		//	eu consigo ver se essa ação foi chamada
-		//	
-        if (Input.IsActionJustPressed("Pular") && IsOnFloor())
+        if (CurrentLadder != null)
         {
-            velocity.Y = JumpVelocity;
-        }
+            velocity.Y = 0;
 
-        float direction = Input.GetAxis("Esquerda", "Direita");
-        if (direction != 0)
-        {
-            velocity.X = direction * Speed;
-			// Aqui ele muda o SENTIDO do vetor
-			// Nesse caso a velocidade é uma grandeza vetorial  (física e algebra linear)
+            float verticalDirection = Input.GetAxis("Cima", "Baixo");
+            
+            if (verticalDirection != 0)
+            {
+                velocity.Y = verticalDirection * Speed;
+            }
+
+            float direction = Input.GetAxis("Esquerda", "Direita");
+            velocity.X = direction * (Speed * 0.75f);
+
+            if (Input.IsActionJustPressed("Pular"))
+            {
+                CurrentLadder = null;
+                velocity.Y = JumpVelocity;
+            }
         }
         else
         {
-            velocity.X = 0; 
+            if (!IsOnFloor())
+            {
+                velocity.Y += Gravity * (float)delta;
+            }
+
+            if (Input.IsActionJustPressed("Pular") && IsOnFloor())
+            {
+                velocity.Y = JumpVelocity;
+            }
+
+            float direction = Input.GetAxis("Esquerda", "Direita");
+            if (direction != 0)
+            {
+                velocity.X = direction * Speed;
+            }
+            else
+            {
+                velocity.X = 0; 
+            }
         }
+		
 
         Velocity = velocity;
         MoveAndSlide();

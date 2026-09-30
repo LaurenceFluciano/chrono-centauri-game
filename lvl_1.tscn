@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://uamb5x1cvyp5" path="res://assets/tiles/present_tiles.png" id="7_4snel"]
 [ext_resource type="Script" uid="uid://b1ix0oamodxb2" path="res://scripts/Hazard.cs" id="8_31jyx"]
 [ext_resource type="Script" uid="uid://jpwf8x05w752" path="res://scripts/TimeEntity.cs" id="8_a1bqk"]
+[ext_resource type="Script" uid="uid://cks0dydoash1s" path="res://scripts/Ladder.cs" id="9_4snel"]
 [ext_resource type="Texture2D" uid="uid://bw2urg1f6cyll" path="res://assets/sprites/past-ladder.png" id="9_a1bqk"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_a1bqk"]
@@ -342,6 +343,9 @@ size = Vector2(48.4375, 4)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3da4y"]
 size = Vector2(79.8125, 4)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c4xbo"]
+size = Vector2(11, 112)
+
 [node name="Lvl1" type="Node" unique_id=1013201348]
 
 [node name="Player" parent="." unique_id=499282757 instance=ExtResource("1_okdh5")]
@@ -508,9 +512,9 @@ position = Vector2(-159.90625, -141)
 shape = SubResource("RectangleShape2D_3da4y")
 one_way_collision = true
 
-[node name="Ladder" type="Node2D" parent="." unique_id=1150532319]
+[node name="Ladder" type="Area2D" parent="." unique_id=1914600022]
 position = Vector2(420, -188)
-script = ExtResource("8_a1bqk")
+script = ExtResource("9_4snel")
 AllowedEras = 1
 
 [node name="PastLadder" type="Sprite2D" parent="Ladder" unique_id=741549653]
@@ -535,3 +539,7 @@ texture = ExtResource("9_a1bqk")
 [node name="PastLadder6" type="Sprite2D" parent="Ladder" unique_id=1550704518]
 position = Vector2(0, 80)
 texture = ExtResource("9_a1bqk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ladder" unique_id=484876717]
+position = Vector2(0.5, 48)
+shape = SubResource("RectangleShape2D_c4xbo")
