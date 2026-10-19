@@ -4,6 +4,25 @@ using System;
 public partial class Player : CharacterBody2D
 {
 
+    // Controle de estado do player
+    public enum PlayerState
+    {
+        Idle,
+        Walking,
+        Jumping,
+        Falling
+    }
+
+    private PlayerState currentState = PlayerState.Idle;
+    private float direction = 1;
+
+    // Animacao 
+    private AnimationPlayer _animPlayer;
+
+    // Desenho / Sprite
+
+    private Sprite2D _sprite;
+
     public static Player Instance { get; private set; }
 	[Export] public float Speed = 200.0f;
     [Export] public float JumpVelocity = -350.0f;
@@ -40,6 +59,13 @@ public partial class Player : CharacterBody2D
 	public override void _Ready()
     {
         var spawnPoint = GetNodeOrNull<Node2D>("../SpawnPoint");
+
+
+        _animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+        _sprite = GetNode<Sprite2D>("PlayerAnimation");
+
+        _animPlayer.Play("idle");
+
         if (spawnPoint != null)
         {
             _spawnPosition = spawnPoint.GlobalPosition;
@@ -98,10 +124,13 @@ public partial class Player : CharacterBody2D
 	{
         if (IsTransition)
         {
+            _animPlayer.SpeedScale = 0;
             Instance.Velocity = Vector2.Zero;
             MoveAndSlide();
             return;
         }
+
+        _animPlayer.SpeedScale = 1;
 
 		/**
 		* Velocity
@@ -127,7 +156,7 @@ public partial class Player : CharacterBody2D
                 velocity.Y = verticalDirection * Speed;
             }
 
-            float direction = Input.GetAxis("Esquerda", "Direita");
+            direction = Input.GetAxis("Esquerda", "Direita");
             velocity.X = direction * (Speed * 0.75f);
 
             if (Input.IsActionJustPressed("Pular"))
@@ -138,29 +167,83 @@ public partial class Player : CharacterBody2D
         }
         else
         {
+
+            // CINEMATICA BASICAs
+            if (velocity.Y > 0)
+                changeState(PlayerState.Falling);
+            else if (velocity.Y < 0)
+                changeState(PlayerState.Jumping);
+            
+
             if (!IsOnFloor())
-            {
                 velocity.Y += Gravity * (float)delta;
-            }
+            else
+                changeState(PlayerState.Idle);
+            
 
             if (Input.IsActionJustPressed("Pular") && IsOnFloor())
             {
                 velocity.Y = JumpVelocity;
             }
 
-            float direction = Input.GetAxis("Esquerda", "Direita");
+            direction = Input.GetAxis("Esquerda", "Direita");
             if (direction != 0)
             {
+                changeState(PlayerState.Walking);
                 velocity.X = direction * Speed;
             }
             else
-            {
                 velocity.X = 0; 
-            }
+            
         }
 		
 
         Velocity = velocity;
+        processAnimation();
         MoveAndSlide();
 	}
+
+    private void processAnimation()
+    {
+        switch(currentState)
+        {
+            case PlayerState.Idle:
+                _animPlayer.Play("idle");
+                break;
+            case PlayerState.Jumping:
+                _animPlayer.Play("jumping");
+                break;
+            case PlayerState.Falling:
+                _animPlayer.Play("falling");
+                break;
+            case PlayerState.Walking:
+                _animPlayer.Play("walking");
+                break;
+            default:
+                currentState = PlayerState.Idle;
+                break;
+        }
+
+        if (direction < 0)
+        {
+            _sprite.FlipH = true;
+        }
+        else if (direction > 0)
+        {
+            _sprite.FlipH = false;
+        }
+    }
+
+    private void changeState(PlayerState newState)
+    {
+        
+        if (newState == PlayerState.Walking && currentState != PlayerState.Idle)
+        {
+            return;
+        }
+
+
+        currentState = newState;
+    }
+
 }

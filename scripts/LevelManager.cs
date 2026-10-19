@@ -26,7 +26,6 @@ public partial class LevelManager : Node2D
 
     public override void _Ready()
     {
-        SwitchToEra(CurrentEra, forceUpdate: true);
 
         // Mover no futuro para o MainLevel
         Player.Instance.EraChangeRequested += RequestEraChange;

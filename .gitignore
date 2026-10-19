@@ -1,3 +1,30 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+
+/export.cfg
+/export_presets.cfg.bak
+/build/
+/dist/
+/publish/
+
+*.import
+
+*.exe
+*.pck
+*.sh
+*.x86_64
+
+/data_Chrono Centauri_linuxbsd_x86_64/
+/data_Chrono Centauri_windows_x86_64/
+
+bin/
+obj/
+[Bb]uild/
+*.dll
+*.pdb
+
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
