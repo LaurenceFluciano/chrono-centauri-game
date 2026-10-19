@@ -23,6 +23,12 @@ public partial class Player : CharacterBody2D
 
     private Sprite2D _sprite;
 
+    // Coyote config
+
+    private double _coyote = 0.08f;
+    private double _coyoteTimer = 0.0;
+
+
     public static Player Instance { get; private set; }
 	[Export] public float Speed = 200.0f;
     [Export] public float JumpVelocity = -350.0f;
@@ -60,6 +66,7 @@ public partial class Player : CharacterBody2D
     {
         var spawnPoint = GetNodeOrNull<Node2D>("../SpawnPoint");
 
+        _coyote = 0.08f;
 
         _animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         _sprite = GetNode<Sprite2D>("PlayerAnimation");
@@ -163,6 +170,7 @@ public partial class Player : CharacterBody2D
             {
                 CurrentLadder = null;
                 velocity.Y = JumpVelocity;
+                 _coyoteTimer = 0;
             }
         }
         else
@@ -175,15 +183,23 @@ public partial class Player : CharacterBody2D
                 changeState(PlayerState.Jumping);
             
 
-            if (!IsOnFloor())
+            if (!IsOnFloor()) {
+                if (_coyoteTimer > 0 ){
+                    _coyoteTimer -= delta;
+                } else _coyoteTimer = 0;
                 velocity.Y += Gravity * (float)delta;
-            else
+            }
+            else {
+                _coyoteTimer = _coyote;
                 changeState(PlayerState.Idle);
+            }
             
 
-            if (Input.IsActionJustPressed("Pular") && IsOnFloor())
+            if (Input.IsActionJustPressed("Pular") && _coyoteTimer > 0)
             {
+                GD.Print($"Pulo | noChao={IsOnFloor()} | coyote={_coyoteTimer:F3}");
                 velocity.Y = JumpVelocity;
+                _coyoteTimer = 0;
             }
 
             direction = Input.GetAxis("Esquerda", "Direita");
