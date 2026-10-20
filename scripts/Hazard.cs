@@ -1,7 +1,9 @@
+using System;
 using Godot;
 
 public partial class Hazard : TimeArea
 {
+
     public override void _Ready()
     {
         base._Ready();
@@ -12,6 +14,7 @@ public partial class Hazard : TimeArea
     {
         if (body is Player player)
         {
+            LevelManager.Instance?.RequestEraChange(LevelManager.Instance.InitialEra);
             player.Respawn();
         }
     }

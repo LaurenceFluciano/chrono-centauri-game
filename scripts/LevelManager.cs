@@ -9,6 +9,9 @@ public partial class LevelManager : Node2D
 
     public Era CurrentEra { get; private set; } = Era.Present;
 
+
+    [Export] public Era InitialEra = Era.Present;
+
     [Export] Camera2D Camera;
 
     [Export] public float TransactionDuration = 2f;
@@ -24,6 +27,14 @@ public partial class LevelManager : Node2D
     private AudioStreamPlayer _fowardSound;
     private AudioStreamPlayer _backwardSound;
 
+    // Agregador de evento principal
+
+    [Export] private OnOffEventAggregator _eventAgreggator;
+
+    [Export] private int PresentId = 11;
+    [Export] private int PastId = 10;
+    [Export] private int FutureId = 12;
+
 
     public override void _EnterTree()
     {
@@ -37,10 +48,41 @@ public partial class LevelManager : Node2D
 
         _backwardSound = GetNode<AudioStreamPlayer>("BackwardTimeEffect");
 
+
+        if (_eventAgreggator != null)
+        {
+            _eventAgreggator.OnEvent += HandleInteract;
+        }
+
         // Mover no futuro para o MainLevel
         GauntletTime.Instance.EraChangeRequested += RequestEraChange;
 
 
+        SwitchTiles(InitialEra);
+
+    }
+
+    public void HandleInteract(object sender, OnOffEventArgs eventArgs)
+    {
+        
+        if (eventArgs.State == OnOffEnum.On) {
+
+            if (eventArgs.Id == 10 )
+            {
+                SwitchToEra(Era.Past);
+            }
+
+            if (eventArgs.Id == 11 )
+            {
+                SwitchToEra(Era.Present);
+            }
+
+            if (eventArgs.Id == 12 )
+            {
+                SwitchToEra(Era.Future);
+            }
+
+        }
     }
 
     public void RequestEraChange(Era requestedEra)

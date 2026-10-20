@@ -1,0 +1,94 @@
+[gd_scene format=3 uid="uid://ucgf1glbsi0r"]
+
+[ext_resource type="Script" uid="uid://mppo5muyr0wy" path="res://scripts/ButtonController.cs" id="1_77lbf"]
+[ext_resource type="Texture2D" uid="uid://b82erl8b1h60k" path="res://assets/sprites/present-button-time.png" id="2_u4c4u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pe210"]
+size = Vector2(17, 24)
+
+[sub_resource type="Animation" id="Animation_c731l"]
+resource_name = "Desligando"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PastButtonTime:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.16666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [2, 1, 0]
+}
+
+[sub_resource type="Animation" id="Animation_dvy2s"]
+resource_name = "Ligando"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PastButtonTime:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.16666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_pbbi8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PastButtonTime:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_frby8"]
+resource_name = "Rest"
+length = 0.13333334
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PastButtonTime:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_c731l"]
+_data = {
+&"Desligando": SubResource("Animation_c731l"),
+&"Ligando": SubResource("Animation_dvy2s"),
+&"RESET": SubResource("Animation_pbbi8"),
+&"Rest": SubResource("Animation_frby8")
+}
+
+[node name="Area2D" type="Area2D" unique_id=961526241]
+script = ExtResource("1_77lbf")
+AllowedEras = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=685297040]
+position = Vector2(8.5, 0)
+shape = SubResource("RectangleShape2D_pe210")
+
+[node name="PastButtonTime" type="Sprite2D" parent="." unique_id=61326118]
+position = Vector2(8, 0)
+texture = ExtResource("2_u4c4u")
+hframes = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=863354]
+libraries/ = SubResource("AnimationLibrary_c731l")

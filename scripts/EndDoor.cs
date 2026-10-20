@@ -11,8 +11,10 @@ public partial class EndDoor : TimeArea
 
     [Export] private OnOffEventAggregator _eventAgreggator;
 
-    // Podes exportar a cena da UI para arrastá-la no inspetor (ex: LevelClearUI.tscn)
-    [Export] private PackedScene _endGameUiScene;
+
+    [Export] PackedScene LevelScene;
+
+
 
     public override void _Ready()
     {
@@ -70,23 +72,17 @@ public partial class EndDoor : TimeArea
     {
         if (body is Player && _isOpen)
         {
-            ShowEndGameUI();
+            if (LevelScene != null) {
+                NextLevel();
+            }
         }
     }
 
-    private void ShowEndGameUI()
+
+    private void NextLevel()
     {
-        if (_endGameUiScene != null)
-        {
-            var uiInstance = _endGameUiScene.Instantiate<CanvasLayer>();
-            
-            GetTree().Root.AddChild(uiInstance);
-
-            GetTree().Paused = true;
-        }
-        else
-        {
-            GD.Print("Fim da fase. Obrigado por jogar!");
-        }
+        GetTree().ChangeSceneToPacked(LevelScene);
     }
+
+
 }
