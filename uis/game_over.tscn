@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://dtvu3xw1yyv2u"]
+
+[ext_resource type="Script" uid="uid://dreq5iea4m4w6" path="res://uis/RestartButton.cs" id="1_dltcc"]
+[ext_resource type="PackedScene" uid="uid://c01o5gpqf0nmk" path="res://levels/lvl_1.tscn" id="2_pyoda"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pyoda"]
+bg_color = Color(0.4305148, 0.58380586, 0.95248836, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_74fd5"]
+bg_color = Color(0.21637031, 0.37407297, 0.8205068, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ot1sh"]
+bg_color = Color(0.35197178, 0.5154464, 0.9310663, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=2096411587]
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=435858204]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.00054820627, 0.008770589, 0.015916042, 0.92156863)
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="ColorRect" unique_id=1473986716]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -130.0
+offset_top = 197.0
+offset_right = 126.0
+offset_bottom = 242.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 48
+text = "Game Over"
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="ColorRect" unique_id=60730476]
+layout_mode = 0
+offset_left = 471.0
+offset_top = 318.0
+offset_right = 676.0
+offset_bottom = 388.0
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_pyoda")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_74fd5")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ot1sh")
+text = "Recomeçar"
+script = ExtResource("1_dltcc")
+LevelScene = ExtResource("2_pyoda")
+metadata/_edit_use_anchors_ = true

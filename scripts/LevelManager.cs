@@ -38,7 +38,7 @@ public partial class LevelManager : Node2D
         _backwardSound = GetNode<AudioStreamPlayer>("BackwardTimeEffect");
 
         // Mover no futuro para o MainLevel
-        Player.Instance.EraChangeRequested += RequestEraChange;
+        GauntletTime.Instance.EraChangeRequested += RequestEraChange;
 
 
     }

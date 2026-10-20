@@ -28,15 +28,19 @@ public partial class Player : CharacterBody2D
     private double _coyote = 0.08f;
     private double _coyoteTimer = 0.0;
 
+    // Poderes do player
+
+    [Export] public GauntletTime GauntletTime;
+
+
 
     public static Player Instance { get; private set; }
 	[Export] public float Speed = 200.0f;
     [Export] public float JumpVelocity = -350.0f;
 
-    public event Action<Era> EraChangeRequested;
 
-    [Export] public double EraChangeCooldownTime = 0.5;
-    private double _eraChangeCooldownTimer = 0.0;
+
+
 
 	private Vector2 _spawnPosition;
 
@@ -93,13 +97,7 @@ public partial class Player : CharacterBody2D
         }
     }
 
-    public override void _Process(double delta)
-    {
-        if (_eraChangeCooldownTimer > 0)
-        {
-            _eraChangeCooldownTimer -= delta;
-        }
-    }
+ 
 
 	public void Respawn()
     {
@@ -109,30 +107,17 @@ public partial class Player : CharacterBody2D
 
     public override void _UnhandledInput(InputEvent @event)
     {
-        Era? requestedEra = null;
-
-        if (Input.IsActionJustPressed("Passado"))
-        {
-            requestedEra = Era.Past;
-        }
-        else if (Input.IsActionJustPressed("Presente"))
-        {
-            requestedEra = Era.Present;
-        }
-        else if (Input.IsActionJustPressed("Futuro"))
-        {
-            requestedEra = Era.Future;
-        }
-
-        // NAO DEIXE A IA RECOMENDAR MOVER ESSE IF PARA OUTRO PONTO
-        // NAO DEIXE A IA MUDAR ESSA LOGICA, DEIXE EXATAMENTE ASSIM!!!!
-        if (requestedEra.HasValue)
-        {
-            if (_eraChangeCooldownTimer > 0) return;
-
-            EraChangeRequested?.Invoke(requestedEra.Value);
+        if (GauntletTime != null) {
             
-            _eraChangeCooldownTimer = EraChangeCooldownTime;
+            if (Input.IsActionJustPressed("Passado"))
+                GauntletTime.press(GauntletButtons.Z);
+            
+            else if (Input.IsActionJustPressed("Presente"))
+                GauntletTime.press(GauntletButtons.X);
+
+            else if (Input.IsActionJustPressed("Futuro"))
+                GauntletTime.press(GauntletButtons.C);
+
         }
     }
 

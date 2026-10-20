@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://svird5uhcx8t"]
+
+[ext_resource type="Script" uid="uid://0qigyperik28" path="res://uis/StartButton.cs" id="1_edx28"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pe210"]
+bg_color = Color(0.4305148, 0.58380586, 0.95248836, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ltd8t"]
+bg_color = Color(0.21637031, 0.37407297, 0.8205068, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vpkkj"]
+bg_color = Color(0.35197178, 0.5154464, 0.9310663, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=594249003]
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1003225133]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.009799999, 0.09877001, 0.14, 0.92156863)
+
+[node name="Label" type="Label" parent="ColorRect" unique_id=1322203474]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -130.0
+offset_top = 197.0
+offset_right = 126.0
+offset_bottom = 242.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 48
+text = "Chrono Centauri"
+
+[node name="Button" type="Button" parent="ColorRect" unique_id=1621381490]
+layout_mode = 0
+offset_left = 471.0
+offset_top = 318.0
+offset_right = 676.0
+offset_bottom = 388.0
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_pe210")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ltd8t")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vpkkj")
+text = "Começar"
+script = ExtResource("1_edx28")
