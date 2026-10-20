@@ -57,6 +57,12 @@ public partial class Player : CharacterBody2D
 	//			No campo: Gravida Padrão
 	public float Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 
+
+    // Efeitos sonoros do player
+
+    private AudioStreamPlayer _jumpSound;
+
+
     public override void _EnterTree()
     {
         Instance = this;
@@ -65,6 +71,9 @@ public partial class Player : CharacterBody2D
 	public override void _Ready()
     {
         var spawnPoint = GetNodeOrNull<Node2D>("../SpawnPoint");
+
+        _jumpSound = GetNode<AudioStreamPlayer>("JumpSound");
+
 
         _coyote = 0.08f;
 
@@ -177,8 +186,10 @@ public partial class Player : CharacterBody2D
         {
 
             // CINEMATICA BASICAs
-            if (velocity.Y > 0)
+            if (velocity.Y > 0) {
                 changeState(PlayerState.Falling);
+                _jumpSound.Stop();
+            }
             else if (velocity.Y < 0)
                 changeState(PlayerState.Jumping);
             
@@ -197,6 +208,7 @@ public partial class Player : CharacterBody2D
 
             if (Input.IsActionJustPressed("Pular") && _coyoteTimer > 0)
             {
+                _jumpSound.Play();
                 velocity.Y = JumpVelocity;
                 _coyoteTimer = 0;
             }

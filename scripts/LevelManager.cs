@@ -19,6 +19,12 @@ public partial class LevelManager : Node2D
 
     private bool _isTransitioning;
 
+    // Sons de efeito
+
+    private AudioStreamPlayer _fowardSound;
+    private AudioStreamPlayer _backwardSound;
+
+
     public override void _EnterTree()
     {
         Instance = this;
@@ -26,6 +32,10 @@ public partial class LevelManager : Node2D
 
     public override void _Ready()
     {
+
+        _fowardSound = GetNode<AudioStreamPlayer>("FowardTimeEffect");
+
+        _backwardSound = GetNode<AudioStreamPlayer>("BackwardTimeEffect");
 
         // Mover no futuro para o MainLevel
         Player.Instance.EraChangeRequested += RequestEraChange;
@@ -58,6 +68,16 @@ public partial class LevelManager : Node2D
         // Criar evento e Mover no futuro para o MainLevel
 
         Player.Instance.IsTransition = _isTransitioning;
+
+
+
+
+        if (warpDir > 0f)
+            _fowardSound.Play();
+        else
+            _backwardSound.Play();
+
+    
         
         var tileTween = CreateTween();
         tileTween.TweenInterval(TransactionDuration * 0.78f);
@@ -65,6 +85,16 @@ public partial class LevelManager : Node2D
             SwitchTiles(CurrentEra);
             OnEraChanged?.Invoke(CurrentEra);
         }));
+
+
+        CreateTween().TweenCallback(Callable.From(() =>
+        {
+            if (warpDir > 0f)
+                _fowardSound.Stop();
+            else
+                _backwardSound.Stop();
+            
+        })).SetDelay(TransactionDuration);
 
 
         

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cpfmo0cfjgoxy" path="res://scripts/Player.cs" id="1_onrkg"]
 [ext_resource type="Texture2D" uid="uid://b8ter7ytypfgj" path="res://assets/sprites/player_animation.png" id="2_onrkg"]
+[ext_resource type="AudioStream" uid="uid://bep2584ki63x8" path="res://assets/songs/SFX_Jump_22.wav" id="3_qhqgy"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pe210"]
 radius = 4.0
@@ -112,3 +113,6 @@ vframes = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=598715345]
 libraries/ = SubResource("AnimationLibrary_sweqy")
+
+[node name="JumpSound" type="AudioStreamPlayer" parent="." unique_id=398337300]
+stream = ExtResource("3_qhqgy")
