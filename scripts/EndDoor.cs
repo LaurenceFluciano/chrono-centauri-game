@@ -1,12 +1,15 @@
 using System;
 using Godot;
 
+// Acoplamento-03 : A porta de fim deveria renderizar a tela de fim?
 public partial class EndDoor : TimeArea
 {
     private AnimationPlayer _animPlayer;
     private bool _isOpen = false;
 
-    [Export] private Lever _targetLever;
+    [Export] public int InteractId = 0; 
+
+    [Export] private OnOffEventAggregator _eventAgreggator;
 
     // Podes exportar a cena da UI para arrastá-la no inspetor (ex: LevelClearUI.tscn)
     [Export] private PackedScene _endGameUiScene;
@@ -15,9 +18,9 @@ public partial class EndDoor : TimeArea
     {
         base._Ready();
 
-        if (_targetLever != null)
+        if (_eventAgreggator != null)
         {
-            _targetLever.OnLeverPull += HandleLeverPull;
+            _eventAgreggator.OnEvent += HandleInteract;
         }
 
         _animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
@@ -31,16 +34,27 @@ public partial class EndDoor : TimeArea
     public override void _ExitTree()
     {
         base._ExitTree();
-        if (_targetLever != null)
+        if (_eventAgreggator != null)
         {
-            _targetLever.OnLeverPull -= HandleLeverPull;
+            _eventAgreggator.OnEvent -= HandleInteract;
         }
         BodyEntered -= OnBodyEntered;
     }
 
-    private void HandleLeverPull(bool isActivated)
+    private void HandleInteract(object sender, OnOffEventArgs eventArgs)
     {
-        _isOpen = isActivated;
+        GD.Print($"IdInteracao={InteractId} | Evento=Id:{eventArgs.Id};State:{eventArgs.State};");
+        if (eventArgs.Id != InteractId)
+            return;
+        
+
+        if (eventArgs.State == OnOffEnum.On)
+        {
+            _isOpen = true;
+        } else
+        {
+            _isOpen = false;
+        }
         
         if (_isOpen)
         {

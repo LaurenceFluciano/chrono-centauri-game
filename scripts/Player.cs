@@ -197,7 +197,6 @@ public partial class Player : CharacterBody2D
 
             if (Input.IsActionJustPressed("Pular") && _coyoteTimer > 0)
             {
-                GD.Print($"Pulo | noChao={IsOnFloor()} | coyote={_coyoteTimer:F3}");
                 velocity.Y = JumpVelocity;
                 _coyoteTimer = 0;
             }
