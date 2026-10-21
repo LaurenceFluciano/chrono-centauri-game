@@ -1,0 +1,109 @@
+[gd_scene format=3 uid="uid://brysyqt1qxrsy"]
+
+[ext_resource type="Script" uid="uid://co4w1gipu5uce" path="res://scripts/ManoplaAltarController.cs" id="1_kwtvq"]
+[ext_resource type="Texture2D" uid="uid://cpfmbgqtn55n8" path="res://assets/sprites/manopla-altar.png" id="1_w614c"]
+[ext_resource type="Script" uid="uid://cqny1kokfcduq" path="res://scripts/GauntletTime.cs" id="2_yiabl"]
+[ext_resource type="Texture2D" uid="uid://ifyuxc7syahv" path="res://assets/sprites/TimeChangeClock.png" id="4_a80jr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mr1e5"]
+size = Vector2(24, 37)
+
+[sub_resource type="Animation" id="Animation_yiabl"]
+resource_name = "Closed"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ManoplaAltar:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.10000001, 0.19999999, 0.3, 0.39999998, 0.5, 0.6, 0.70000005, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8]
+}
+
+[sub_resource type="Animation" id="Animation_kwtvq"]
+resource_name = "Got"
+length = 0.033333335
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ManoplaAltar:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [18]
+}
+
+[sub_resource type="Animation" id="Animation_w614c"]
+resource_name = "Opened"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ManoplaAltar:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.099920094, 0.20261574, 0.29976028, 0.40106815, 0.49960044, 0.6022961, 0.69944066, 0.8007485),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [9, 10, 11, 12, 13, 14, 15, 16, 17]
+}
+
+[sub_resource type="Animation" id="Animation_paxll"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ManoplaAltar:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kwtvq"]
+_data = {
+&"Closed": SubResource("Animation_yiabl"),
+&"Got": SubResource("Animation_kwtvq"),
+&"Opened": SubResource("Animation_w614c"),
+&"RESET": SubResource("Animation_paxll")
+}
+
+[node name="ManoplaAltar" type="Area2D" unique_id=1552951719 node_paths=PackedStringArray("ItemSprite", "ItemComponent")]
+script = ExtResource("1_kwtvq")
+ItemSprite = NodePath("Item")
+ItemComponent = NodePath("Manopla")
+AllowedEras = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=892342319]
+position = Vector2(0, -5.5)
+shape = SubResource("RectangleShape2D_mr1e5")
+
+[node name="ManoplaAltar" type="Sprite2D" parent="." unique_id=133437764]
+position = Vector2(0, -3)
+texture = ExtResource("1_w614c")
+hframes = 9
+vframes = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1031018157]
+libraries/ = SubResource("AnimationLibrary_kwtvq")
+
+[node name="Manopla" type="Node" parent="." unique_id=1720399232]
+script = ExtResource("2_yiabl")
+
+[node name="Item" type="Sprite2D" parent="." unique_id=1249790144]
+visible = false
+position = Vector2(0, -20)
+texture = ExtResource("4_a80jr")

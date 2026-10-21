@@ -3,11 +3,26 @@
 [ext_resource type="Script" uid="uid://cpfmo0cfjgoxy" path="res://scripts/Player.cs" id="1_onrkg"]
 [ext_resource type="Texture2D" uid="uid://b8ter7ytypfgj" path="res://assets/sprites/player_animation.png" id="2_onrkg"]
 [ext_resource type="AudioStream" uid="uid://bep2584ki63x8" path="res://assets/songs/SFX_Jump_22.wav" id="3_qhqgy"]
-[ext_resource type="Script" uid="uid://cqny1kokfcduq" path="res://scripts/GauntletTime.cs" id="4_dqkch"]
+[ext_resource type="Texture2D" uid="uid://mf5wjw6ysmxo" path="res://assets/sprites/pickitem.png" id="5_qlg0r"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pe210"]
 radius = 4.0
 height = 26.0
+
+[sub_resource type="Animation" id="Animation_tuyoq"]
+resource_name = "GettingItem"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PickItem:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
 
 [sub_resource type="Animation" id="Animation_i3pqv"]
 length = 0.001
@@ -18,6 +33,18 @@ tracks/0/path = NodePath("PlayerAnimation:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PickItem:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -92,6 +119,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_sweqy"]
 _data = {
+&"GettingItem": SubResource("Animation_tuyoq"),
 &"RESET": SubResource("Animation_i3pqv"),
 &"falling": SubResource("Animation_onrkg"),
 &"idle": SubResource("Animation_hqtel"),
@@ -118,5 +146,8 @@ libraries/ = SubResource("AnimationLibrary_sweqy")
 [node name="JumpSound" type="AudioStreamPlayer" parent="." unique_id=398337300]
 stream = ExtResource("3_qhqgy")
 
-[node name="Manopla" type="Node" parent="." unique_id=1152582312]
-script = ExtResource("4_dqkch")
+[node name="PickItem" type="Sprite2D" parent="." unique_id=2085755168]
+visible = false
+position = Vector2(-1, 0)
+texture = ExtResource("5_qlg0r")
+hframes = 5

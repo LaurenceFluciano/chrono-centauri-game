@@ -10,7 +10,8 @@ public partial class Player : CharacterBody2D
         Idle,
         Walking,
         Jumping,
-        Falling
+        Falling,
+        GettingItem
     }
 
     private PlayerState currentState = PlayerState.Idle;
@@ -22,6 +23,8 @@ public partial class Player : CharacterBody2D
     // Desenho / Sprite
 
     private Sprite2D _sprite;
+
+    private Sprite2D _spriteGettingItem;
 
     // Coyote config
 
@@ -67,9 +70,20 @@ public partial class Player : CharacterBody2D
     private AudioStreamPlayer _jumpSound;
 
 
+    // Item que está sendo exibido/pego no momento
+    private GetItemEventArgs _pendingItem;
+
+    private const float ItemOffsetY = -24f;
+
+
     public override void _EnterTree()
     {
         Instance = this;
+    }
+
+    public override void _ExitTree()
+    {
+        ItemEvents.OnGetItem -= HandleGetItem;
     }
 
 	public override void _Ready()
@@ -83,8 +97,15 @@ public partial class Player : CharacterBody2D
 
         _animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         _sprite = GetNode<Sprite2D>("PlayerAnimation");
+        _spriteGettingItem = GetNode<Sprite2D>("PickItem");
+
+        _spriteGettingItem.Visible = false;
 
         _animPlayer.Play("idle");
+
+        
+        ItemEvents.OnGetItem += HandleGetItem;
+        _animPlayer.AnimationFinished += OnAnimationFinished;
 
         if (spawnPoint != null)
         {
@@ -105,8 +126,67 @@ public partial class Player : CharacterBody2D
         Velocity = Vector2.Zero;
     }
 
+    public void HandleGetItem(object sender, GetItemEventArgs eventArgs)
+    {
+        _pendingItem = eventArgs;
+
+        changeState(PlayerState.GettingItem);
+
+        Velocity = Vector2.Zero;
+        _animPlayer.SpeedScale = 1;
+
+        _sprite.Visible = false;
+        _spriteGettingItem.Visible = true;
+
+        var itemSprite = eventArgs.ItemSprite;
+        if (itemSprite != null)
+        {
+            if (itemSprite.GetParent() != null)
+                itemSprite.Reparent(this, false);
+            else
+                AddChild(itemSprite);
+
+            itemSprite.Position = new Vector2(0, ItemOffsetY);
+            itemSprite.Visible = true;
+        }
+
+        var component = eventArgs.ItemComponent;
+        if (component != null && component.GetParent() != this)
+        {
+            component.GetParent()?.RemoveChild(component);
+            AddChild(component);
+        }
+
+        processAnimation();
+
+    }
+
+    private void OnAnimationFinished(StringName animName)
+    {
+        if (animName != "GettingItem" || _pendingItem == null)
+            return;
+
+        if (_pendingItem.ItemComponent is GauntletTime gauntlet)
+            GauntletTime = gauntlet;
+
+        _pendingItem.ItemSprite.Visible = false;
+        _pendingItem.ItemSprite?.QueueFree();
+        _pendingItem = null;
+
+    
+
+        _spriteGettingItem.Visible = false;
+        _sprite.Visible = true;
+
+        currentState = PlayerState.Idle;
+        processAnimation();
+    }
+
     public override void _UnhandledInput(InputEvent @event)
     {
+        if (currentState == PlayerState.GettingItem) 
+            return;
+
         if (GauntletTime != null) {
             
             if (Input.IsActionJustPressed("Passado"))
@@ -123,6 +203,9 @@ public partial class Player : CharacterBody2D
 
 	public override void _PhysicsProcess(double delta)
 	{
+        if (currentState == PlayerState.GettingItem) 
+            return;
+
         if (IsTransition)
         {
             _animPlayer.SpeedScale = 0;
@@ -230,6 +313,9 @@ public partial class Player : CharacterBody2D
                 break;
             case PlayerState.Walking:
                 _animPlayer.Play("walking");
+                break;
+            case PlayerState.GettingItem:
+                _animPlayer.Play("GettingItem");
                 break;
             default:
                 currentState = PlayerState.Idle;
