@@ -599,7 +599,6 @@ position = Vector2(-158, 0)
 shape = SubResource("RectangleShape2D_cqewt")
 
 [node name="PresentPlataform" type="StaticBody2D" parent="." unique_id=1760390278]
-visible = false
 position = Vector2(194, -166)
 script = ExtResource("9_wtuha")
 AllowedEras = 2

@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://dfwjaot51l56u"]
+
+[ext_resource type="Texture2D" uid="uid://bqjaellkd7ycl" path="res://assets/sprites/present-blast-door.png" id="1_jcqgs"]
+[ext_resource type="Script" uid="uid://jpwf8x05w752" path="res://scripts/TimeEntity.cs" id="1_mbfrx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pe210"]
+size = Vector2(16, 47)
+
+[node name="Node2D" type="StaticBody2D" unique_id=1892733882]
+script = ExtResource("1_mbfrx")
+AllowedEras = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=350054658]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_pe210")
+
+[node name="PresentBlastDoor" type="Sprite2D" parent="." unique_id=927259237]
+texture = ExtResource("1_jcqgs")
+hframes = 14
+frame = 7

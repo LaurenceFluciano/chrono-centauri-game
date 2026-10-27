@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://djvmldd46kwhp"]
+
+[ext_resource type="Texture2D" uid="uid://bh1fidaf3rs15" path="res://assets/sprites/plataform_past.png" id="2_nb5cp"]
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_nb5cp"]
+tile_data = PackedInt32Array(0, 65536, 0, 1, 131072, 0, 2, 131072, 0, 3, 196608, 0)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nb5cp"]
+texture = ExtResource("2_nb5cp")
+0:0/next_alternative_id = 4
+0:0/0 = 0
+0:0/0/terrain_set = 0
+0:0/0/terrain = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -4.406539, -8, -4.406539)
+0:0/0/physics_layer_0/polygon_0/one_way = true
+1:0/next_alternative_id = 2
+1:0/0 = 0
+1:0/0/terrain_set = 0
+1:0/0/terrain = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -4.406539, -8, -4.406539)
+1:0/0/physics_layer_0/polygon_0/one_way = true
+1:0/0/terrains_peering_bit/right_side = 0
+2:0/next_alternative_id = 2
+2:0/0 = 0
+2:0/0/terrain_set = 0
+2:0/0/terrain = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -4.406539, -8, -4.406539)
+2:0/0/physics_layer_0/polygon_0/one_way = true
+2:0/0/terrains_peering_bit/right_side = 0
+2:0/0/terrains_peering_bit/left_side = 0
+3:0/next_alternative_id = 2
+3:0/0 = 0
+3:0/0/terrain_set = 0
+3:0/0/terrain = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -4.406539, -8, -4.406539)
+3:0/0/physics_layer_0/polygon_0/one_way = true
+3:0/0/terrains_peering_bit/left_side = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_pe210"]
+physics_layer_0/collision_layer = 1
+terrain_set_0/mode = 2
+terrain_set_0/terrain_0/name = "Plataform"
+terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
+sources/0 = SubResource("TileSetAtlasSource_nb5cp")
+pattern_0 = SubResource("TileMapPattern_nb5cp")
+
+[node name="Plataform" type="Node2D" unique_id=1156675394]
+
+[node name="Plataform" type="TileMapLayer" parent="." unique_id=2127480458]
+tile_map_data = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+tile_set = SubResource("TileSet_pe210")
