@@ -16,9 +16,10 @@ public partial class LevelManager : Node2D
 
     [Export] public float TransactionDuration = 2f;
 
-    [Export] public TileMapLayer TilesPast { get; set; }
-    [Export] public TileMapLayer TilesPresent { get; set; }
-    [Export] public TileMapLayer TilesFuture { get; set; }
+    [ExportGroup("Static Time Scenes")]
+    [Export] public Node2D PastScene { get; set; }
+    [Export] public Node2D PresentScene { get; set; }
+    [Export] public Node2D FutureScene { get; set; }
 
     private bool _isTransitioning;
 
@@ -41,6 +42,18 @@ public partial class LevelManager : Node2D
         Instance = this;
     }
 
+    public override void _ExitTree()
+    {
+        if (_eventAgreggator != null)
+            _eventAgreggator.OnEvent -= HandleInteract;
+
+        if (GauntletTime.Instance != null)
+            GauntletTime.Instance.EraChangeRequested -= RequestEraChange;
+
+        if (Instance == this)
+            Instance = null;
+    }
+
     public override void _Ready()
     {
 
@@ -57,32 +70,21 @@ public partial class LevelManager : Node2D
         // Mover no futuro para o MainLevel
         GauntletTime.Instance.EraChangeRequested += RequestEraChange;
 
-
-        SwitchTiles(InitialEra);
-
+        CurrentEra = InitialEra;
+        SwitchScene(CurrentEra);
     }
 
     public void HandleInteract(object sender, OnOffEventArgs eventArgs)
     {
-        
-        if (eventArgs.State == OnOffEnum.On) {
+        if (eventArgs.State != OnOffEnum.On)
+            return;
 
-            if (eventArgs.Id == 10 )
-            {
-                SwitchToEra(Era.Past);
-            }
-
-            if (eventArgs.Id == 11 )
-            {
-                SwitchToEra(Era.Present);
-            }
-
-            if (eventArgs.Id == 12 )
-            {
-                SwitchToEra(Era.Future);
-            }
-
-        }
+        if (eventArgs.Id == PastId)
+            SwitchToEra(Era.Past);
+        else if (eventArgs.Id == PresentId)
+            SwitchToEra(Era.Present);
+        else if (eventArgs.Id == FutureId)
+            SwitchToEra(Era.Future);
     }
 
     public void RequestEraChange(Era requestedEra)
@@ -124,7 +126,7 @@ public partial class LevelManager : Node2D
         var tileTween = CreateTween();
         tileTween.TweenInterval(TransactionDuration * 0.78f);
         tileTween.TweenCallback(Callable.From(() => {
-            SwitchTiles(CurrentEra);
+            SwitchScene(CurrentEra);
             OnEraChanged?.Invoke(CurrentEra);
         }));
 
@@ -207,41 +209,38 @@ public partial class LevelManager : Node2D
 
     // FIM DO CODIGO INTRUSO DE MEXER A CAMERA ------
 
-    private void SwitchTiles(Era era)
+    private void SwitchScene(Era era)
     {
-        var targetTiles = era switch
+        SetSceneActive(PastScene, era == Era.Past);
+        SetSceneActive(PresentScene, era == Era.Present);
+        SetSceneActive(FutureScene, era == Era.Future);
+    }
+
+    private void SetSceneActive(Node2D scene, bool active)
+    {
+        if (scene == null) return;
+
+        scene.Visible = active;
+
+        scene.ProcessMode = active
+            ? ProcessModeEnum.Inherit
+            : ProcessModeEnum.Disabled;
+
+        SetTileLayersActive(scene, active);
+    }
+
+    private void SetTileLayersActive(Node node, bool active)
+    {
+        if (node is TileMapLayer layer)
         {
-            Era.Past    => TilesPast,
-            Era.Present => TilesPresent,
-            Era.Future  => TilesFuture,
-            _           => null
-        };
+            layer.Enabled = active;
+        }
 
-        SetEra(targetTiles);
-    } 
-
-    private void SetEra(TileMapLayer activeLayer)
-    {
-        DisableLayer(TilesPresent);
-        DisableLayer(TilesPast);
-        DisableLayer(TilesFuture);
-
-        EnableLayer(activeLayer);
+        foreach (Node child in node.GetChildren())
+        {
+            SetTileLayersActive(child, active);
+        }
     }
 
-    private void EnableLayer(TileMapLayer layer)
-    {
-        if (layer == null) return;
-        layer.Visible = true;
-        layer.ProcessMode = ProcessModeEnum.Inherit;
-        layer.Enabled = true;
-    }
 
-    private void DisableLayer(TileMapLayer layer)
-    {
-        if (layer == null) return;
-        layer.Visible = false;
-        layer.ProcessMode = ProcessModeEnum.Disabled;
-        layer.Enabled = false;
-    }
 }

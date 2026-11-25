@@ -1,9 +1,16 @@
 [gd_scene format=3 uid="uid://svird5uhcx8t"]
 
 [ext_resource type="Script" uid="uid://0qigyperik28" path="res://uis/StartButton.cs" id="1_edx28"]
+[ext_resource type="Texture2D" uid="uid://b4b7wrtyo2hh3" path="res://assets/capa.png" id="1_vpkkj"]
+
+[sub_resource type="FontVariation" id="FontVariation_osft8"]
+variation_face_index = 2
+variation_embolden = 0.03
+spacing_glyph = -1
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pe210"]
-bg_color = Color(0.4305148, 0.58380586, 0.95248836, 1)
+bg_color = Color(0.12156863, 0.4, 0.8392157, 1)
+border_color = Color(1, 1, 1, 1)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -11,6 +18,7 @@ corner_radius_bottom_left = 8
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ltd8t"]
 bg_color = Color(0.21637031, 0.37407297, 0.8205068, 1)
+border_color = Color(0.9137255, 0.9490196, 0.9843137, 1)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -33,28 +41,21 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.009799999, 0.09877001, 0.14, 0.92156863)
 
-[node name="Label" type="Label" parent="ColorRect" unique_id=1322203474]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -130.0
-offset_top = 197.0
-offset_right = 126.0
-offset_bottom = 242.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 48
-text = "Chrono Centauri"
+[node name="Capa" type="Sprite2D" parent="ColorRect" unique_id=828486046]
+position = Vector2(577, 326.5)
+scale = Vector2(1.8, 1.8027778)
+texture = ExtResource("1_vpkkj")
 
 [node name="Button" type="Button" parent="ColorRect" unique_id=1621381490]
 layout_mode = 0
-offset_left = 471.0
-offset_top = 318.0
-offset_right = 676.0
-offset_bottom = 388.0
+offset_left = 834.0
+offset_top = 378.0
+offset_right = 1077.0
+offset_bottom = 448.0
+theme_override_fonts/font = SubResource("FontVariation_osft8")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_pe210")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ltd8t")
 theme_override_styles/hover = SubResource("StyleBoxFlat_vpkkj")
-text = "Começar"
+text = "NOVO JOGO"
 script = ExtResource("1_edx28")

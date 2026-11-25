@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://b3akmdvte3m87"]
+
+[ext_resource type="Texture2D" uid="uid://cewo3ntwqcbxg" path="res://assets/sprites/plataforms/plataform_present.png" id="1_eh61x"]
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_nb5cp"]
+tile_data = PackedInt32Array(0, 65536, 0, 1, 131072, 0, 2, 131072, 0, 3, 196608, 0)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c8i3b"]
+texture = ExtResource("1_eh61x")
+0:0/0 = 0
+0:0/0/terrain_set = 0
+0:0/0/terrain = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -4.36103, -8, -4.238184)
+0:0/0/physics_layer_0/polygon_0/one_way = true
+1:0/0 = 0
+1:0/0/terrain_set = 0
+1:0/0/terrain = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -4.36103, -8, -4.238184)
+1:0/0/physics_layer_0/polygon_0/one_way = true
+1:0/0/terrains_peering_bit/right_side = 0
+2:0/0 = 0
+2:0/0/terrain_set = 0
+2:0/0/terrain = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -4.36103, -8, -4.238184)
+2:0/0/physics_layer_0/polygon_0/one_way = true
+2:0/0/terrains_peering_bit/right_side = 0
+2:0/0/terrains_peering_bit/left_side = 0
+3:0/0 = 0
+3:0/0/terrain_set = 0
+3:0/0/terrain = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -4.36103, -8, -4.238184)
+3:0/0/physics_layer_0/polygon_0/one_way = true
+3:0/0/terrains_peering_bit/left_side = 0
+
+[sub_resource type="TileSet" id="TileSet_rnb2s"]
+physics_layer_0/collision_layer = 1
+terrain_set_0/mode = 2
+terrain_set_0/terrain_0/name = "Plataform"
+terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
+terrain_set_0/terrain_1/name = "Grades"
+terrain_set_0/terrain_1/color = Color(0.5, 0.4375, 0.25, 1)
+sources/1 = SubResource("TileSetAtlasSource_c8i3b")
+pattern_0 = SubResource("TileMapPattern_nb5cp")
+
+[node name="PresentPlataform" type="Node2D" unique_id=258404346]
+
+[node name="Plataform" type="TileMapLayer" parent="." unique_id=200677162]
+tile_set = SubResource("TileSet_rnb2s")
