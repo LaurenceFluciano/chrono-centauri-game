@@ -1,0 +1,298 @@
+[gd_scene format=4 uid="uid://c0ww872yvgx6p"]
+
+[ext_resource type="Script" uid="uid://c6c1ugxdrppe6" path="res://scripts/LevelManager.cs" id="1_gsxgk"]
+[ext_resource type="Script" uid="uid://dsvjeelhcx6q3" path="res://scripts/OnOffEventAggregator.cs" id="1_t4b6k"]
+[ext_resource type="Texture2D" uid="uid://bwxtedootx2we" path="res://assets/sprites/plataforms/plataform_future.png" id="1_yctt8"]
+[ext_resource type="Script" uid="uid://cpfmo0cfjgoxy" path="res://scripts/Player.cs" id="2_gsxgk"]
+[ext_resource type="Shader" uid="uid://boe5m04je7har" path="res://travel_era.gdshader" id="3_68kt7"]
+[ext_resource type="Script" uid="uid://b1ix0oamodxb2" path="res://scripts/Hazard.cs" id="3_rj2lu"]
+[ext_resource type="Texture2D" uid="uid://cgndhsyyredxf" path="res://assets/sprites/characters/player_animation.png" id="4_by3sw"]
+[ext_resource type="AudioStream" uid="uid://bep2584ki63x8" path="res://assets/songs/SFX_Jump_22.wav" id="5_4h04l"]
+[ext_resource type="AudioStream" uid="uid://cq532upfqutdg" path="res://assets/songs/effect_01.wav" id="5_rj2lu"]
+[ext_resource type="Texture2D" uid="uid://piq64tukdh61" path="res://assets/sprites/characters/pickitem.png" id="6_rj2lu"]
+[ext_resource type="AudioStream" uid="uid://bsoxfgsedre8i" path="res://assets/songs/effect_01-reversed.wav" id="6_t4b6k"]
+[ext_resource type="PackedScene" uid="uid://wry2f3d3ntty" path="res://scenes/boxes/entity_box.tscn" id="7_t4b6k"]
+[ext_resource type="Script" uid="uid://cqny1kokfcduq" path="res://scripts/GauntletTime.cs" id="9_68kt7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t4b6k"]
+size = Vector2(772, 20)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_nb5cp"]
+tile_data = PackedInt32Array(0, 65536, 0, 1, 131072, 0, 2, 131072, 0, 3, 196608, 0)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_08nnd"]
+texture = ExtResource("1_yctt8")
+0:0/0 = 0
+0:0/0/terrain_set = 0
+0:0/0/terrain = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -4.238184, -8, -4.3610306)
+0:0/0/physics_layer_0/polygon_0/one_way = true
+1:0/0 = 0
+1:0/0/terrain_set = 0
+1:0/0/terrain = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -4.238184, -8, -4.3610306)
+1:0/0/physics_layer_0/polygon_0/one_way = true
+1:0/0/terrains_peering_bit/right_side = 0
+2:0/0 = 0
+2:0/0/terrain_set = 0
+2:0/0/terrain = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -4.238184, -8, -4.3610306)
+2:0/0/physics_layer_0/polygon_0/one_way = true
+2:0/0/terrains_peering_bit/right_side = 0
+2:0/0/terrains_peering_bit/left_side = 0
+3:0/0 = 0
+3:0/0/terrain_set = 0
+3:0/0/terrain = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -4.238184, -8, -4.3610306)
+3:0/0/physics_layer_0/polygon_0/one_way = true
+3:0/0/terrains_peering_bit/left_side = 0
+0:1/0 = 0
+0:1/0/terrain_set = 0
+1:1/0 = 0
+1:1/0/terrain_set = 0
+2:1/0 = 0
+2:1/0/terrain_set = 0
+3:1/0 = 0
+3:1/0/terrain_set = 0
+
+[sub_resource type="TileSet" id="TileSet_5rve6"]
+physics_layer_0/collision_layer = 1
+terrain_set_0/mode = 2
+terrain_set_0/terrain_0/name = "Plataform"
+terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
+terrain_set_0/terrain_1/name = "Grades"
+terrain_set_0/terrain_1/color = Color(0.5, 0.4375, 0.25, 1)
+sources/0 = SubResource("TileSetAtlasSource_08nnd")
+pattern_0 = SubResource("TileMapPattern_nb5cp")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k0pf4"]
+shader = ExtResource("3_68kt7")
+shader_parameter/travel_intensity = 0.0
+shader_parameter/distortion_intensity = 0.0
+shader_parameter/spark_alpha = 0.0
+shader_parameter/direction = -1.0
+shader_parameter/star_color = Color(0.75, 0.9, 1, 1)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_egs5v"]
+radius = 4.0
+height = 26.0
+
+[sub_resource type="Animation" id="Animation_tuyoq"]
+resource_name = "GettingItem"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PickItem:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_i3pqv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerAnimation:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PickItem:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_onrkg"]
+resource_name = "falling"
+length = 0.16666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerAnimation:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+
+[sub_resource type="Animation" id="Animation_hqtel"]
+resource_name = "idle"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerAnimation:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8333333, 1.1, 2.7666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 1]
+}
+
+[sub_resource type="Animation" id="Animation_sweqy"]
+resource_name = "jumping"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerAnimation:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.03333333),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [5]
+}
+
+[sub_resource type="Animation" id="Animation_2hs0m"]
+resource_name = "walking"
+length = 0.6666667
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerAnimation:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.13333334, 0.33333334, 0.53333336),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [10, 9, 10, 11]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8bj34"]
+_data = {
+&"GettingItem": SubResource("Animation_tuyoq"),
+&"RESET": SubResource("Animation_i3pqv"),
+&"falling": SubResource("Animation_onrkg"),
+&"idle": SubResource("Animation_hqtel"),
+&"jumping": SubResource("Animation_sweqy"),
+&"walking": SubResource("Animation_2hs0m")
+}
+
+[node name="Node" type="Node" unique_id=1935774118]
+script = ExtResource("1_t4b6k")
+
+[node name="LevelManager" type="Node2D" parent="." unique_id=729071989 node_paths=PackedStringArray("Camera", "PastScene", "PresentScene", "FutureScene", "_eventAgreggator", "_travelScreen")]
+script = ExtResource("1_gsxgk")
+Camera = NodePath("../Player/Camera2D2")
+PastScene = NodePath("StaticTimeScene/Past")
+PresentScene = NodePath("StaticTimeScene/Present")
+FutureScene = NodePath("StaticTimeScene/Future")
+_eventAgreggator = NodePath("..")
+_travelScreen = NodePath("../Player/Camera2D2/ColorRect2")
+
+[node name="StaticTimeScene" type="Node2D" parent="LevelManager" unique_id=819318272]
+
+[node name="GlobalDangerZone" type="Area2D" parent="LevelManager/StaticTimeScene" unique_id=1870471573]
+position = Vector2(508, 9)
+script = ExtResource("3_rj2lu")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelManager/StaticTimeScene/GlobalDangerZone" unique_id=3563967]
+position = Vector2(-158, 0)
+shape = SubResource("RectangleShape2D_t4b6k")
+
+[node name="Past" type="Node2D" parent="LevelManager/StaticTimeScene" unique_id=664421510]
+visible = false
+
+[node name="Plataform" type="TileMapLayer" parent="LevelManager/StaticTimeScene/Past" unique_id=900191678]
+tile_map_data = PackedByteArray("AAAAAP//AAABAAAAAAABAP//AAACAAAAAAACAP//AAACAAAAAAADAP//AAACAAAAAAAEAP//AAACAAAAAAAFAP//AAACAAAAAAAGAP//AAADAAAAAAA=")
+tile_set = SubResource("TileSet_5rve6")
+
+[node name="Present" type="Node2D" parent="LevelManager/StaticTimeScene" unique_id=823572747]
+visible = false
+
+[node name="Plataform" type="TileMapLayer" parent="LevelManager/StaticTimeScene/Present" unique_id=1526701481]
+tile_map_data = PackedByteArray("AAAAAP//AAABAAAAAAABAP//AAACAAAAAAACAP//AAACAAAAAAADAP//AAACAAAAAAAEAP//AAACAAAAAAAFAP//AAACAAAAAAAGAP//AAADAAAAAAA=")
+tile_set = SubResource("TileSet_5rve6")
+
+[node name="Future" type="Node2D" parent="LevelManager/StaticTimeScene" unique_id=1693094009]
+
+[node name="Plataform" type="TileMapLayer" parent="LevelManager/StaticTimeScene/Future" unique_id=1154899844]
+tile_map_data = PackedByteArray("AAAAAP//AAABAAAAAAABAP//AAACAAAAAAACAP//AAACAAAAAAADAP//AAACAAAAAAAEAP//AAACAAAAAAAFAP//AAACAAAAAAAGAP//AAADAAAAAAA=")
+tile_set = SubResource("TileSet_5rve6")
+
+[node name="Manopla" type="Node" parent="LevelManager" unique_id=599523551]
+script = ExtResource("9_68kt7")
+
+[node name="TimeEntities" type="Node2D" parent="LevelManager" unique_id=241998625]
+
+[node name="EntityBox" parent="LevelManager/TimeEntities" unique_id=1934297137 instance=ExtResource("7_t4b6k")]
+position = Vector2(93, -30)
+
+[node name="FowardTimeEffect" type="AudioStreamPlayer" parent="LevelManager" unique_id=1381928580]
+stream = ExtResource("5_rj2lu")
+
+[node name="BackwardTimeEffect" type="AudioStreamPlayer" parent="LevelManager" unique_id=1908149433]
+stream = ExtResource("6_t4b6k")
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1528497954 node_paths=PackedStringArray("GauntletTime")]
+position = Vector2(40, -32)
+input_pickable = true
+script = ExtResource("2_gsxgk")
+GauntletTime = NodePath("../LevelManager/Manopla")
+
+[node name="Camera2D2" type="Camera2D" parent="Player" unique_id=824424599]
+zoom = Vector2(4, 4)
+limit_left = 0
+limit_right = 732
+limit_bottom = 0
+
+[node name="ColorRect2" type="ColorRect" parent="Player/Camera2D2" unique_id=2084541671]
+top_level = true
+z_index = 998
+material = SubResource("ShaderMaterial_k0pf4")
+anchors_preset = -1
+anchor_left = 0.040000003
+anchor_right = 0.040000003
+offset_left = -46.08
+offset_top = -162.0
+offset_right = 241.92
+offset_bottom = -1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=472037314]
+position = Vector2(-1, 3)
+shape = SubResource("CapsuleShape2D_egs5v")
+
+[node name="PlayerAnimation" type="Sprite2D" parent="Player" unique_id=1827317724]
+texture = ExtResource("4_by3sw")
+hframes = 4
+vframes = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player" unique_id=1557631289]
+libraries/ = SubResource("AnimationLibrary_8bj34")
+
+[node name="JumpSound" type="AudioStreamPlayer" parent="Player" unique_id=1471307192]
+stream = ExtResource("5_4h04l")
+
+[node name="PickItem" type="Sprite2D" parent="Player" unique_id=177677047]
+visible = false
+position = Vector2(-1, 0)
+texture = ExtResource("6_rj2lu")
+hframes = 5

@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://wry2f3d3ntty"]
+
+[ext_resource type="Script" uid="uid://jpwf8x05w752" path="res://scripts/TimeEntity.cs" id="1_y0wdv"]
+[ext_resource type="Texture2D" uid="uid://d21bixs6abmwf" path="res://assets/sprites/box/past-metal-box.png" id="2_exwuy"]
+[ext_resource type="Texture2D" uid="uid://05dupc0g24hn" path="res://assets/sprites/box/present-metal-box.png" id="3_y38hb"]
+[ext_resource type="Texture2D" uid="uid://bvgwhjubtnfe4" path="res://assets/sprites/box/future-metal-box.png" id="4_5xi51"]
+
+[node name="EntityBox" type="Node2D" unique_id=1934297137]
+script = ExtResource("1_y0wdv")
+TexturePast = ExtResource("2_exwuy")
+TexturePresent = ExtResource("3_y38hb")
+TextureFuture = ExtResource("4_5xi51")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1238808018]
+texture = ExtResource("3_y38hb")

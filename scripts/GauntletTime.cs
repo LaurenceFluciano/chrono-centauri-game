@@ -63,4 +63,10 @@ public partial class GauntletTime : Node
             _eraChangeCooldownTimer -= delta;
         }
     }
+
+    public override void _ExitTree()
+    {
+        if (Instance == this)
+            Instance = null;
+    }
 }
